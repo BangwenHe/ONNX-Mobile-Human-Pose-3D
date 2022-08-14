@@ -24,7 +24,10 @@ class YoloV5s():
 
     def initialize_model(self, model_path):
 
-        self.session = onnxruntime.InferenceSession(model_path)
+        if onnxruntime.get_device() == "GPU":
+            self.session = onnxruntime.InferenceSession(model_path, providers=['CUDAExecutionProvider'])
+        else:
+            self.session = onnxruntime.InferenceSession(model_path)
 
         # Get model info
         self.getModel_input_details()

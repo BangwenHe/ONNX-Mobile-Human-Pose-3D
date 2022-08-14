@@ -22,13 +22,13 @@ detector_model_path='models/model_float32.onnx'
 person_detector = YoloV5s(detector_model_path, conf_thres=0.45, iou_thres=0.4)
 
 # Initialize video
-# cap = cv2.VideoCapture("video.mp4")
+cap = cv2.VideoCapture(r"C:\Users\Bangwen\PycharmProjects\RealsenseDepth\data\offline_square.mp4")
 
-videoUrl = 'https://youtu.be/SJ6f2TnHZBc'
-videoPafy = pafy.new(videoUrl)
-print(videoPafy.streams)
-cap = cv2.VideoCapture(videoPafy.streams[-1].url)
-cap.set(cv2.CAP_PROP_POS_MSEC, 1*60000+30000) # Skip inital frames
+# videoUrl = 'https://youtu.be/SJ6f2TnHZBc'
+# videoPafy = pafy.new(videoUrl)
+# print(videoPafy.streams)
+# cap = cv2.VideoCapture(videoPafy.streams[-1].url)
+# cap.set(cv2.CAP_PROP_POS_MSEC, 1*60000+30000) # Skip inital frames
 
 #out = cv2.VideoWriter('output.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 30, (3840,720))
 
@@ -41,6 +41,8 @@ while cap.isOpened():
         ret, frame = cap.read()
     except:
         continue
+
+    frame = cv2.imread("mhp_crop_2p_0.jpg")
 
     if ret: 
 

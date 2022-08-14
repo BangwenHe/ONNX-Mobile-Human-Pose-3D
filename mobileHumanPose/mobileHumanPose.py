@@ -25,7 +25,10 @@ class MobileHumanPose():
 
     def initialize_model(self, model_path):
 
-        self.session = onnxruntime.InferenceSession(model_path)
+        if onnxruntime.get_device() == "GPU":
+            self.session = onnxruntime.InferenceSession(model_path, providers=['CUDAExecutionProvider'])
+        else:
+            self.session = onnxruntime.InferenceSession(model_path)
 
         # Get model info
         self.getModel_input_details()
@@ -59,6 +62,7 @@ class MobileHumanPose():
 
     def inference(self, input_tensor):
 
+        input_tensor = np.load("mhp_crop_0.npy")
         output = self.session.run(self.output_names, {self.input_name: input_tensor})[0]
 
         return np.squeeze(output)
